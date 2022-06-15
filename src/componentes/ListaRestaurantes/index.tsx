@@ -30,7 +30,7 @@ const ListaRestaurantes = () => {
         setPaginaAnterior(resposta.data.previous)
       })
       .catch(erro => {
-        console.log(erro)
+        alert(erro);
       })
   }
 

@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import IRestaurante from '../../../interfaces/IRestaurante';
 import { Grid, IconButton, Link, Typography } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import http from '../../../http';
 
@@ -18,6 +18,8 @@ const AdministracaoRestaurantes = () => {
     http.get<IRestaurante[]>('restaurantes/')
       .then(resposta => setRestaurantes(resposta.data))
   }, [])
+
+
   const remover = (restaurante:IRestaurante) => {
     http.delete(`restaurantes/${restaurante.id}/`)
       .then(() => {

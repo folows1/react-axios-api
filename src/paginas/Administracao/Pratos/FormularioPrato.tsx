@@ -1,7 +1,9 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import http from "../../../http";
+import IPrato from "../../../interfaces/IPrato";
 import IRestaurante from "../../../interfaces/IRestaurante";
 import ITag from "../../../interfaces/ITag";
 
@@ -13,8 +15,24 @@ const FormularioPrato = () => {
     const [tag, setTag] = useState('');
     const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([]);
     const [restaurante, setRestaurante] = useState('');
-
     const [imagem, setImagem] = useState<File | null>(null)
+
+    const params = useParams();
+
+    useEffect(() => {
+        if (params.id) {
+            http.get<IPrato>(`pratos/${params.id}/`)
+                .then(resposta => {
+                    setNomePrato(resposta.data.nome);
+                    setDescricao(resposta.data.descricao);
+                    setTag(resposta.data.tag);
+                    setImagem(null);
+                    setRestaurante(resposta.data.restaurante.toString());
+                })
+        }
+    }, [params])
+
+
 
     useEffect(() => {
         http.get<{ tags: ITag[] }>('tags/')
